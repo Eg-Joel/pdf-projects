@@ -15,7 +15,7 @@ mongoose.connect(
 .catch((err) => {
     console.log(err);
 })
-const __dirname = path.resolve();
+
 
 app.use(express.json()) 
 app.use(cookieParser());

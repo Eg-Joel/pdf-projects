@@ -15,10 +15,11 @@ mongoose.connect(
 .catch((err) => {
     console.log(err);
 })
+const __dirname = path.resolve();
 
 app.use(express.json()) 
 app.use(cookieParser());
-const staticPath = path.join(__dirname, 'client', 'dist');
+
 app.listen(3000,()=>{
     console.log('server is running');
 })
@@ -28,12 +29,11 @@ app.use("/api/files", express.static("files"));
 app.use("/api/pdf", pdfRouter)
 app.use("/api/auth", authRouter)
 
-app.use(express.static(staticPath));
-
+app.use(express.static(path.join(__dirname, '/client/dist')));
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(staticPath, 'index.html'));
-});
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
   
 app.use((err, req, res, next)=>{
 const statusCode = err.statusCode || 500

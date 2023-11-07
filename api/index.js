@@ -18,8 +18,7 @@ mongoose.connect(
 
 app.use(express.json()) 
 app.use(cookieParser());
-
-const __dirname = path.resolve();
+const staticPath = path.join(__dirname, 'client', 'dist');
 app.listen(3000,()=>{
     console.log('server is running');
 })
@@ -29,12 +28,12 @@ app.use("/api/files", express.static("files"));
 app.use("/api/pdf", pdfRouter)
 app.use("/api/auth", authRouter)
 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+app.use(express.static(staticPath));
 
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-  })
+    res.sendFile(path.join(staticPath, 'index.html'));
+});
   
 app.use((err, req, res, next)=>{
 const statusCode = err.statusCode || 500
